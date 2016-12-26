@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>task19时间对象、引用类型</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+</head>
+<body>
+  <script type="text/javascript">
+  	//如下代码的输出? 为什么?
+  	var obj1 = {a:1, b:2};
+		var obj2 = {a:1, b:2};
+		console.log(obj1 == obj2);//false  因为obj1与obj2保存的是不同的地址，虽然不同的地址里的值是一样的。
+
+		console.log(obj1 = obj2);//Object {a: 1, b: 2} 把obj2储存的地址传给obj1，返回这个地址里的对象。
+
+		console.log(obj1 == obj2);//true 因为上一步已经使得obj1与obj2的地址一样了，指向的值当然也一样。
+
+		//1.写一个函数getIntv，获取从当前时间到指定日期的间隔时间
+		function getIntv(time) {
+	  var sec = Math.round((Date.parse(time)-Date.now())/1000);
+	  var day = Math.floor(sec/60/60/24);
+	  var hour=Math.floor((sec-day*24*3600)/3600);
+	  var minute=Math.floor((sec-day*24*3600-hour*3600)/60);
+	  var second=sec-day*24*3600-hour*3600-minute*60;
+	  return '距除夕还有'+day+'天'+hour+'小时'+minute+'分'+second+'秒';
+	}
+	  var str = getIntv('2017-01-27');
+	  console.log(str);//距除夕还有40天14小时46分35秒
+
+	  //2. 把数字日期改成中文日期
+		var str = getChsDate('2015-01-08');
+		console.log(str);  // 二零一五年一月八日
+
+		//代码如下：
+		function getChsDate(str){
+	  var arr=str.split('-');
+	  var year='';
+	  var mydate='';
+	  var arrBig=['零','一','二','三','四','五','六','七','八','九']
+	  for(var i=0;i<4;i++){
+	    year+=arrBig[arr[0][i]]
+	  }
+
+	    function m_d(val){
+	      if(val.length===1){
+	        val='0'+val;
+	      }
+	      if(val[0]==='0'){
+	        return arrBig[val[1]];
+	      }else{
+	        return '十'+arrBig[val[1]];
+	      }
+	    }
+	    mydate=year+'年'+m_d(arr[1])+'月'+m_d(arr[2])+'日';
+	    return mydate;
+		}
+	  console.log(getChsDate('2016-12-17'));//二零一六年十二月十七日
+	  console.log(getChsDate('2017-1-27'));//二零一七年一月十七日
+
+	  //3. 写一个函数获取n天前的日期
+	  var lastWeek =  getLastNDays(7); // ‘2016-01-08’
+		var lastMonth = getLastNDays(30); //'2015-12-15'
+
+		//代码如下：
+		function getLastNDays(n){
+	  var oldDaySec=Date.now()-n*24*3600*1000;
+	  var oldDay=new Date(oldDaySec);
+	  return oldDay.getFullYear()+'-'+(oldDay.getMonth()+1)+'-'+oldDay.getDate();
+		}
+		console.log(getLastNDays(7));//'2016-12-10'
+		console.log(getLastNDays(30));//'2016-11-17'
+
+		//4. 完善如下代码，用于获取执行时间如：
+		var Runtime = (function(){
+    var start,end,get;//code here ...
+    var obj = {
+        start: function(){
+              //code here ...， 当前时间
+              start=Date.now();
+              return start;
+        },
+        end: function(){
+             //code here ...  结束时间
+             end=Date.now();
+             return end;
+        },
+        get: function(){
+             //code here ...  获取执行时间
+             return (end-start)+'毫秒';
+        }
+    }
+		return obj;
+		}());
+		Runtime.start();
+		for(var i=0;i<1000;i++){
+		  console.log(1)
+		}
+		Runtime.end();
+		console.log(  Runtime.get() );//86毫秒
+
+		//5. 楼梯有20级，每次走1级或是2级，从底走到顶一共有多少种走法？用代码（递归）实现
+		function f(n){
+      if(n===1){
+        return 1
+      }else if (n===2) {
+        return 2
+      }else{
+        return f(n-1)+f(n-2)
+      }
+    }
+  	console.log('共有'+f(20)+'种走法')//共有10946种走法
+
+  	//6. 写一个json对象深拷贝的方法，json对象可以多层嵌套，值可以是字符串、数字、布尔、json对象中的任意项（PS:尝试另外一种方法 var obj2 = JSON.parse( JSON.stringify(obj1) ) ）
+  	var obj1={
+		  a:1,
+		  b:true,
+		  c:'你好',
+		  d:{
+		    e:5,
+		    f:[1,2,3]
+		  }
+		};
+		//方法一：
+		function deepcopy(obj){
+		  var obj2={};
+		  for(var key in obj){
+		    if(typeof obj[key]==='object'){
+		      obj2[key]=deepcopy(obj[key])
+		    }else{
+		      obj2[key]=obj[key]
+		    }
+		  }
+		 return obj2;
+		}
+		//方法二：
+		var obj2 = JSON.parse( JSON.stringify(obj1) )
+  </script>
+</body>
+</html>

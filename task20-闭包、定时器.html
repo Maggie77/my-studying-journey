@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>task20闭包、定时器</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+</head>
+<body>
+	 <script type="text/javascript">
+	 		//1. 下面的代码输出多少？修改代码让fnArr[i]输出 i。使用两种以上的方法
+	 		var fnArr = [];
+	    for (var i = 0; i < 10; i ++) {
+	        fnArr[i] =  function(){
+	            return i;
+	        };
+	    }
+	    console.log( fnArr[3]() );  //10
+
+	    //方法一：
+	    var fnArr = [];
+	    for (var i = 0; i < 10; i ++) {
+	        fnArr[i] =  (function(){
+	           var n = i;
+	           return function(){
+	           return n;
+	            }
+	        })();
+	    }
+	    console.log( fnArr[3]() ); //3
+	    
+	    //方法二：
+	    var fnArr = [];
+	    for (var i = 0; i < 10; i ++) {
+	        (function(n){
+	           fnArr[i]=function(){
+	            return n;
+	           }
+	        })(i)
+	    }
+	    console.log( fnArr[3]() );  //3
+
+			//方法三：
+			var fnArr = [];
+			    for (var i =0 ; i<10; i++){
+			       (function(){
+			          var n = i;
+			          fnArr[i]= function(){
+			            return n;
+			          }
+			       })()
+			    }
+			 console.log( fnArr[3]() );  //3
+
+		 //2. 用闭包封装一个汽车对象，可以通过如下方式获取汽车状态
+			var Car = (function(){
+			    var speed;
+			    function setSpeed(n){
+			        speed = n;
+			    }
+			    function getSpeed(){
+			        return speed;
+			    }
+			    function accelerate(){
+			        speed += 10;
+			    }
+			    function decelerate(){
+			        speed -= 10;
+			    }
+			    function getStatus(){
+			        if(speed>0){
+			            return 'running';
+			        }else{
+			            return 'stop';
+			        }
+			    }
+			    return {
+			        'setSpeed': setSpeed,
+			        'getSpeed': getSpeed,
+			        'accelerate':accelerate,
+			        'decelerate':decelerate,
+			        'getStatus':getStatus
+			    }
+			})();
+			    Car.setSpeed(30);
+			    Car.getSpeed(); //30
+			    Car.accelerate();
+			    Car.getSpeed(); //40;
+			    Car.decelerate();
+			    Car.decelerate();
+			    Car.getSpeed(); //20
+			    Car.getStatus(); // 'running';
+			    Car.decelerate(); 
+			    Car.decelerate();
+			    Car.getStatus();  //'stop';
+			    //Car.speed;  //undefined
+
+		  //3. 写一个函数使用setTimeout模拟setInterval的功能
+		  //以下两种方法均实现从10到1的倒计时
+			var i=10;
+			var a=setInterval(function(){
+			    if(i>0){
+			        console.log(i--);
+			    }
+			},1000 )
+
+			var j=10;
+			(function intv(){
+			    setTimeout(function(){
+			    if(j>0){
+			        console.log(j--);
+			    }
+			    intv();
+			    },1000);
+			})()
+
+			//4. 写一个函数，计算setTimeout平均[备注：新加]最小时间粒度
+			(function mintime(){
+			    var i=0;
+			    var start = Date.now();
+			    var clock=setTimeout(function(){
+			        i++;
+			        if(i===1000){
+			            clearTimeout(clock);
+			            var end=Date.now();
+			            console.log( (end-start)/i );
+			        }
+			        clock = setTimeout(arguments.callee,0);
+			    },0)
+			})();//4.883
+
+			//5. 下面这段代码输出结果是? 为什么?
+			var a = 1;
+			setTimeout(function(){
+			    a = 2;
+			    console.log(a);//2
+			}, 0);
+			var a ;
+			console.log(a);//1
+			a = 3;
+			console.log(a);//3
+
+			//按先后顺序是1,3,2；因为setTimeout 0实现异步执行，待其他语句执行完后在执行其内部的函数。
+
+			//6. 下面这段代码输出结果是? 为什么?
+			var flag = true;
+			setTimeout(function(){
+			    flag = false;
+			},0)
+			while(flag){}
+			console.log(flag);
+
+			//死循环阻塞代码执行，无输出。因为setTimeout异步执行，因此while(flag){}中的flag是true，该循环永不会结束，所以永远不会到下一步，因此无任何结果输出。
+
+			//7. 下面这段代码输出？如何输出delayer: 0, delayer:1…（使用闭包来实现）
+			for(var i=0;i<5;i++){
+			    setTimeout(function(){
+			         console.log('delayer:' + i );
+			    }, 0);
+			    console.log(i);
+			}
+			//输出：
+			0
+			1
+			2
+			3
+			4
+			delayer:5
+			delayer:5
+			delayer:5
+			delayer:5
+			delayer:5
+
+			//闭包实现：delayer: 0, delayer:1…
+			//方法一：
+			for(var i=0;i<5;i++){
+			    (function(){
+			    var n=i;
+			    setTimeout(function(){
+			    console.log('delayer:' + n );
+			    }, 0)})()
+			    console.log(i);
+			}
+			//方法二：
+			for(var i=0;i<5;i++){
+			    (function(n){
+			    setTimeout(function(){
+			    console.log('delayer:' + n );
+			    }, 0)})(i)
+			    console.log(i);
+			}
+			//以上两种方法输出：
+			0
+			1
+			2
+			3
+			4
+			delayer:0
+			delayer:1
+			delayer:2
+			delayer:3
+			delayer:4
+			//方法三：
+			for(var i=0;i<5;i++){
+			    setTimeout(function(n){
+			    console.log('delayer:' + n );
+			    }(i), 0)
+			     console.log(i);
+			  }  
+			//输出：
+			delayer:0
+			0
+			delayer:1
+			1
+			delayer:2
+			2
+			delayer:3
+			3
+			delayer:4
+			4
+
+	 </script>
+</body>
+</html>

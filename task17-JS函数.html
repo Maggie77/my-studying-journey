@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>task17</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+</head>
+<body>
+  <script type="text/javascript">
+  	//1.以下代码输出什么？ （难度**）
+  	function getInfo(name, age, sex){
+        console.log('name:',name);
+        console.log('age:', age);
+        console.log('sex:', sex);
+        console.log(arguments);
+        arguments[0] = 'valley';
+        console.log('name', name);
+    }
+
+    getInfo('hunger', 28, '男');
+   //name: hunger
+   //age: 28
+   //sex: 男
+   //["hunger", 28, "男"]
+   //name valley 
+
+    getInfo('hunger', 28);
+   //name: hunger
+   //age: 28
+   //sex: undefined
+   //["hunger", 28]
+   //name valley
+
+   getInfo('男');
+   //name: 男
+   //age: undefined
+   //sex: undefined
+   //["男"]
+   //name valley
+
+   //2. 写一个函数，返回参数的平方和？如 （难度**）
+	 function sumOfSquares(){
+	   var sum=0;
+	   for(var i=0;i<arguments.length;i++){
+	    sum+=arguments[i]*arguments[i];
+	   }
+	   return sum;  
+	}
+	   console.log(sumOfSquares(2,3,4));   // 29
+	   console.log(sumOfSquares(1,3));   // 10
+
+	  //3. 如下代码的输出？为什么 （难度*）
+
+    console.log(a);//undefined
+    var a = 1;
+    console.log(b);// Uncaught ReferenceError: b is not defined(…)
+
+    //变量提升，相当于：
+
+		 var a；
+		 console.log(a);
+		 a = 1;
+		 console.log(b);
+
+		//4.如下代码的输出？为什么 （难度*）
+	  sayName('world');//hello world
+	    sayAge(10);//Uncaught TypeError: sayAge is not a function(…)
+	    function sayName(name){
+	        console.log('hello ', name);
+	    }
+	    var sayAge = function(age){
+	        console.log(age);
+	    };
+
+		//相当于：
+
+		var sayAge;
+		function sayName(name){
+		        console.log('hello ', name);
+		    }
+
+		sayName('world');
+		sayAge(10);
+		    
+		sayAge = function(age){
+		        console.log(age);
+		    };
+
+		//5.如下代码的输出？为什么 （难度**）
+
+		function fn(){}
+		var fn = 3;
+		console.log(fn);//3
+
+		//相当于
+
+		var fn;
+		function fn(){}
+		fn = 3;
+		console.log(fn);//3
+    //先函数的声明覆盖变量的声明，然后变量的赋值覆盖函数的声明。
+
+    //6.如下代码的输出？为什么 （难度***）
+		 function fn(fn2){
+		       console.log(fn2);
+		       var fn2 = 3;
+		       console.log(fn2);
+		       console.log(fn);
+		       function fn2(){
+		            console.log('fnnn2');
+		        }
+		     }
+		    fn(10);
+
+		//输出
+
+		function fn2(){
+		            console.log('fnnn2');
+		        }
+
+		3
+
+		function fn(fn2){
+		       console.log(fn2);
+		       var fn2 = 3;
+		       console.log(fn2);
+		       console.log(fn);
+		       function fn2(){
+		            console.log('fnnn2');
+		        }
+		     }
+
+		//相当于
+		function fn(fn2){
+		       var fn2
+		       function fn2(){
+		            console.log('fnnn2');
+		        }
+		       console.log(fn2);
+		       fn2 = 3;
+		       console.log(fn2);
+		       console.log(fn);       
+		     }
+		    fn(10);
+
+   //7.如下代码的输出？为什么 （难度***）
+    var fn = 1;
+    function fn(fn){
+         console.log(fn);
+    }
+    console.log(fn(fn)); // Uncaught TypeError: fn is not a function(…)
+
+    //相当于
+
+		var fn ;
+		function fn(fn){
+		         console.log(fn);
+		    }
+		fn = 1;
+		console.log(fn(fn)); //最后 fn=1，无法使用fn( )
+
+		//8.如下代码的输出？为什么 （难度**）
+
+    //作用域
+    console.log(j);        //undefined
+    console.log(i);        //undefined
+    for(var i=0; i<10; i++){
+        var j = 100;
+    }
+    console.log(i);       //10
+    console.log(j);       //100
+
+		//for循环不会建立局部变量，仍是全局变量，for循环结束后i=10，j=100
+		
+		//相当于
+    var i,j;
+    console.log(j);              //undefined
+    console.log(i);             //undefined
+    for(var i=0; i<10; i++){
+        var j = 100;
+    }                        //此时i=10，j=100
+    console.log(i);          //10
+    console.log(j);         //100
+
+    //9.如下代码的输出？为什么 （难度****）
+    fn();
+    var i = 10;
+    var fn = 20;
+    console.log(i);
+    function fn(){
+        console.log(i);
+        var i = 99;
+        fn2();
+        console.log(i);
+        function fn2(){
+            i = 100;
+        }
+    }
+
+		//输出：
+		undefined
+		100
+		10
+
+		//相当于：
+		var i;
+		var fn ;
+		function fn(){
+		        var i;
+		        function fn2(){
+		            i = 100;
+		        }
+		        console.log(i);//undefined
+		        i = 99;
+		        fn2(); //此时调用fn2( ) i=100
+		        console.log(i);//100
+		        
+		    }
+		    fn();
+		    i = 10;
+		    fn = 20;
+		    console.log(i);//10
+
+		  //10.如下代码的输出？为什么 （难度*****）
+	    var say = 0;
+	    (function say(n){
+	        console.log(n);
+	        if(n<3) return;
+	        say(n-1);
+	    }( 10 ));      
+	    console.log(say);
+			/*依次输出：10,9,8,7,6,5,4,3,2,0
+			括号内是一个立即执行函数，创建了一个独立的作用域，这个作用域里的变量，外面访问不到。第一次传入参数10，打印10，由于n=10不满足条件(n<3)，于是执行函数say(n-1)，打印9,接着是8,7…3,2，当n=2时，满足条件(n<3)，于是跳出函数，执行console.log(say);,打印0。*/
+
+  </script>
+</body>
+</html>

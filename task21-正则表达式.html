@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>task21-正则表达式</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+</head>
+<body>
+  <script type="text/javascript">
+  	//1. 写一个函数trim(str)，去除字符串两边的空白字符
+		function trim(str){
+		    return str.replace(/^\s+|\s+$/g,"");    
+		}
+
+		//2. 使用实现 addClass(el, cls)、hasClass(el, cls)、removeClass(el,cls)，使用正则
+		function hasClass(el, cls) {
+		    var reg = new RegExp( '(\\s|^)' + cls + '(\\s|$)'   );
+		    return reg.test(el.className);
+		}
+
+		function addClass(el,cls){
+		    var reg = new RegExp( '(\\s|^)' + cls + '(\\s|$)'   );
+		    if(!reg.test(el.className)){
+		        el.className += " "+cls;
+		    }
+		}
+
+		function removeClass(el,cls){
+		    var reg = new RegExp( '(\\s|^)' + cls + '(\\s|$)'   );
+		    if(reg.test(el.className)){
+		        var tmp = el.className.replace(cls,'').replace(/\s{2,}/g,' ');
+		        el.className=tmp;
+		    }
+		}
+
+		//3. 写一个函数isEmail(str)，判断用户输入的是不是邮箱
+		function isEmail(str){
+		    var reg = /^[A-z0-9][\w\-\.]+[@]{1}[A-z0-9][\w\-]+[A-z0-9][.]{1}[A-z]{2,}$/;
+		    return reg.test(str);
+		}
+
+		//4. 写一个函数isPhoneNum(str)，判断用户输入的是不是手机号
+		function isPhone(str){
+		    var reg = /^1[0-9]{10}$/;
+		    return reg.test(str);
+		}
+
+		//5. 写一个函数isValidUsername(str)，判断用户输入的是不是合法的用户名（长度6-20个字符，只能包括字母、数字、下划线）
+		function isValidUsername(str){
+		    var reg = /^\w{6,20}$/;
+		    return reg.test(str);
+		}
+
+		//6. 写一个函数isValidPassword(str), 判断用户输入的是不是合法密码（长度6-20个字符，只包括大写字母、小写字母、数字、下划线，且至少至少包括两种）
+		//方法一：
+		function isValidPassword(str){
+		    var reg = /^\w{6,20}$/;
+		    if(reg.test(str)){
+		        if(/^[A-Z]+$|^[a-z]+$|^\d+$|^_+$/g.test(str)){
+		            return false;
+		        }else{
+		            return true
+		        } 
+		    }else{
+		        return false;
+		    }
+		}
+		//方法二：
+		function isLegalPassword(str){
+		    if(str.length < 6 || str.length > 16){
+		        return false;
+		    }
+		    //如果包含上述四种以外的字符，false
+		    if(/[^A-Za-z_0-9]/.test(str)){
+		        return false;
+		    }
+
+		    //如果全为大写、小写、下划线、数字, false
+		    if( /(^[a-z]+$)|(^[A-Z]+$)|(^_+$)|(^\d+$)/g.test(str) ){
+		        return false;
+		    }
+		    return true;
+		}
+
+		//7. 写一个正则表达式，得到如下字符串里所有的颜色（#121212）
+		var re = /#[a-fA-F0-9]{6}/g;
+		var subj = "color: #121212; background-color: #AA00ef; width: 12px; bad-colors: f#fddee #fd2 "
+
+		alert( subj.match(re) )  // #121212,#AA00ef
+
+		//8. 下面代码输出什么? 为什么? 改写代码，让其输出hunger, world.
+		var str = 'hello  "hunger" , hello "world"';
+		var pat =  /".*"/g;  //贪婪模式，先找到“hunger前的引号，然后找到最后，再回溯引号，找到world“后的引号
+		str.match(pat);    //输出[""hunger" , hello "world""]
+
+		//修改后：
+		var str = 'hello  "hunger" , hello "world"';
+		var pat =  /".*？"/g; //改为非贪婪模式
+		str.match(pat);  
+
+		//9. 补全如下正则表达式，输出字符串中的注释内容. (可尝试使用贪婪模式和非贪婪模式两种方法)
+		var  str = '.. <!-- My -- comment \n test --> ..  <!----> .. '
+		//非贪婪模式：
+		var re = /<!--[\w\W]*?-->/g;
+		str.match(re) // '<!-- My -- comment \n test -->', '<!---->'
+
+		//贪婪模式：
+		var re = /<!--[^>]*-->/g;
+		str.match(re); // '<!-- My -- comment \n test -->', '<!---->'
+
+		//10. 补全如下正则表达式
+		var re = /<[^>]+>/g;
+
+		var str = '<> <a href="/"> <input type="radio" checked> <b>';
+		str.match(re) // '<a href="/">', '<input type="radio" checked>', '<b>'
+
+  </script>  
+</body>
+</html>

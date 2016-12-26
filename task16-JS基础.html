@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>task16</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+</head>
+<body>
+  <script type="text/javascript">
+  //1. 完成如下代码判断一个变量是否是数字、字符串、布尔、函数 （难度*）
+  	function isNumber(el){
+    return typeof(el)==="number";
+	  }
+	  function isString(el){
+	    return typeof(el)==="string";
+	  }
+	  function isBoolean(el){
+	    return typeof(el)==="boolean";
+	  }
+	  function isFunction(el){
+	    return typeof(el)==="function";
+	  }
+
+	  var a = 2,
+	      b = "jirengu",
+	      c = false;
+	  alert( "2是数字："+isNumber(a) );  //2是数字：true
+	  alert( "2是字符串："+isString(a) );  //2是字符串：false
+	  alert( '"jirengu"是字符串：'+isString(b) );  //"jirengu"是字符串：true
+	  alert( "false是boolean："+isBoolean(c) ); //false是boolean：true
+	  alert( "2是函数："+isFunction(a)); //2是函数：false
+	  alert( "isNumber是函数："+isFunction( isNumber ) ); //isNumber是函数：true
+
+	  //2. 以下代码的输出结果是?（难度**）
+	  console.log(1+1); // 2  
+		console.log("2"+"4"); //24  
+		console.log(2+"4"); //24  
+		console.log(+new Date());// 1481460619667   
+		console.log(+"4"); //4   
+
+		//3. 以下代码的输出结果是? （难度***）
+		var a = 1;
+		a+++a; // 3     解析：(a++)+a
+		typeof a+2; //"number2"     解析：先typeof a返回“number”，再+2
+
+		//4. 遍历数组，打印数组每一项的平方 （难度**）
+		var arr = [3,4,5];
+		  for(var i=0;i<arr.length;i++){
+		    console.log(arr[i]*arr[i]);
+		  } // 输出 9, 16, 25
+
+		//5. 遍历 JSON, 打印里面的值 （难度**）
+		var obj = {
+		  name: 'hunger',
+		  sex: 'male',
+		  age: 28
+		};
+		for(var k in obj){
+		  console.log(k+":"+obj[k]+",")
+		}// 输出 name: hunger, sex: male, age:28
+
+		//6.下面代码的输出是? 为什么 （难度***）
+		console.log(a); // undefined 
+		var a = 1;
+		console.log(a);//1
+		console.log(b);// Uncaught ReferenceError: b is not defined(…)   
+		/*第一个显示为undefinde 是因为JS的变量提升。相当于
+		var a;
+		console.log(a);
+		var a = 1;
+		console.log(a);
+		console.log(b);*/
+
+  </script>
+</body>
+</html>
