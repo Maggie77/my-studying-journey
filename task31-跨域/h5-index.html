@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>HTML5</title>
+</head>
+<body>
+	<iframe id="ifr" src="//b.com/tests/cross-origin/h5-index2.html" style="background-color: #ccc"></iframe>
+	<script type="text/javascript">
+		window.onload = function(){
+			var ifr = document.getElementById('ifr');
+			var targetOrigin = 'http://b.com';
+			ifr.contentWindow.postMessage('我在这里',targetOrigin);
+
+		}
+	</script>
+</body>
+</html>

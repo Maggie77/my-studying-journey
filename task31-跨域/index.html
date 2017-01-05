@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>同源策略</title>
+</head>
+<body>
+	<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+
+	<!-- 测试一：a.com/index引用b.com域名下的main.js文件 -->
+	<script src="//b.com/tests/cross-origin/main.js"></script>
+
+	<!-- 测试二：a.com/index通过ajax请求b.com域名下的main.js文件 -->
+	<script type="text/javascript">
+		$.get('//b.com/tests/cross-origin/main.js',function(response){
+				console.log(response);
+		})
+	</script>
+	<!-- 测试三：a.com/index 通过ajax请求a.com域名下的main.js文件 -->
+	<script type="text/javascript">
+		$.get('//a.com/tests/cross-origin/main.js',function(response){
+			console.log(response);
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JSONP</title>
+</head>
+<body>
+	<script type="text/javascript">
+		window.foo = function(data){
+			alert(data);
+		}
+	</script>
+	<!-- 动态引用 -->
+	<script type="text/javascript">
+		var script = document.createElement('script');
+		script.src = '//b.com/tests/cross-origin/server.php?callback=foo';
+		document.body.appendChild(script);
+	</script>
+	<!-- 静态引用，和动态引用无本质差别 -->
+	<!-- <script type="text/javascript" src="//b.com/tests/cross-origin/server.php?callback=foo"></script> -->
+</body>
+</html>
