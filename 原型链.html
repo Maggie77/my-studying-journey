@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script type="text/javascript">
+//问题1：对String做扩展，实现如下方式获取字符串中频率最高的字符
+String.prototype.getMostOften = function(){
+	var obj = {};
+	//console.log(this)
+	for(var i=0,k;i<this.length;i++){
+		k = this[i];
+		if(obj[k]){
+			obj[k]++
+		}else{
+			obj[k] = 1
+		}
+	}
+
+	var max = 0,key;
+
+	for(var k in obj){
+    if(obj[k]>max){
+    	max = obj[k];
+    	key = k;
+    }
+	}
+
+	return key;
+}
+var str = 'ahbbccdeddddfg';
+var ch = str.getMostOften();
+console.log(ch); //d , 因为d 出现了5次
+
+    
+//问题2：instanceOf是如何实现的
+function instanceOf(obj,fn){
+	var oldpro = obj.__proto__;
+  while(oldpro){
+  	if(oldpro === fn.prototype){
+  		return true;
+  	}else{
+  		oldpro = oldpro.__proto__;
+  	}
+  }
+  return false;
+}
+
+</script>
+	
+</body>
+</html>
