@@ -125,13 +125,15 @@
 		  }
 		};
 		//方法一：
-		function deepcopy(obj){
+		function deepCopy(obj){
 		  var obj2={};
 		  for(var key in obj){
-		    if(typeof obj[key]==='object'){
-		      obj2[key]=deepcopy(obj[key])
-		    }else{
-		      obj2[key]=obj[key]
+		    if(obj.hasOwnProperty(key)){
+		    	if(typeof obj[key] === 'number' || typeof obj[key] === 'boolean' || typeof obj[key] === 'string' || obj[key] === undefined || obj[key] === null){
+		    		obj2[key]=obj[key];
+		    	}else{
+		      obj2[key]=deepCopy( obj[key] );
+		      }
 		    }
 		  }
 		 return obj2;
