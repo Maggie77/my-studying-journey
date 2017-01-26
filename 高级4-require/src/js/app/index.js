@@ -16,13 +16,16 @@
 
 //AMD
 
-define(['jquery','com/gotop', 'com/event', 'com/carousel', 'com/exposure'], function($, GoTop, Event, Carousel, Exposure) {
+define(['jquery','com/gotop', 'com/event', 'com/carousel', 'com/waterfall_ajax'], function($, GoTop, Event, Carousel, WaterFall) {
 
 	
 
 	new GoTop();
 
 	Carousel.init($('.carousel'));
+
+	WaterFall.init( $('.sam-list') );
+
 
 	// var i = 0,
 	// 	len = $('.intro p').length;

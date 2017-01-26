@@ -127,7 +127,7 @@
 
 		function loadAndPlace(){
 				$.ajax({
-					url:'http://platform.sina.com.cn/slide/album_tech',
+					url:'http://platform.sina.com.cn/slide/album_tech',/*jsonp数据接口：http://platform.sina.com.cn/slide/album_tech?jsoncallback=func&app_key=1271687855&num=3&page=4*/
 					dataType:'jsonp',
 					jsonp:'jsoncallback',
 					data:{
@@ -145,7 +145,7 @@
 		}
 
 		function place(nodeList){
-				console.log(nodeList);
+				// console.log(nodeList);
 				var $nodes = renderData(nodeList); //节点生成后添加到页面上
 
 				var defereds = []; //创建存储 defered 对象的数组
@@ -168,6 +168,7 @@
 		var colSumHeight = [],
 		nodeWidth = $('.item').outerWidth(true),
 		colNum = parseInt( $('#pic-ct').width()/nodeWidth );
+		console.log($('.item'));
 
 		for(var i=0;i<colNum;i++){
 			colSumHeight.push(0)
@@ -211,7 +212,7 @@
 			}
 			$nodes = $(tpl);
 			$('#pic-ct').append($nodes);
-			//console.log($nodes)
+			console.log($nodes)
 			return $nodes;
 }
 		// <li class="item">

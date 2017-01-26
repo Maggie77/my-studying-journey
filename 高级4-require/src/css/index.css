@@ -1,6 +1,7 @@
 html,body,ul,li,p,a,h1,h2,h3,h4,h5,h6,div,img,input{
 	margin:0;
 	padding: 0; 
+	box-sizing: border-box;
 }
 img{
 	display: block;
@@ -234,39 +235,51 @@ html,body,#header,#header .carousel,#header .img-ct{
 #sample{
 	padding-bottom: 200px;
 }
-#sample .sam-list img{
-	width: 320px;
-	height: 200px;
-}
 #sample>p,#about-us>p{
 	padding: 10px 0;
 	color: #666;
 }
 #sample .sam-list{
-	margin-left: -20px;
+	position:relative;
+	/*margin-left: -25px;*/
 	margin-top: 20px;
 }
 #sample .sam-list>li{
-	float: left;
-	margin-left: 20px;
-	margin-top:30px; 
+	position: absolute;
+	margin-left: 40px;
+	margin-top:35px; 
 	text-align: center;
+	width: 280px;
 	padding-bottom: 40px;
+	padding: 10px 10px 40px;
+	outline: 1px solid #ccc;
+}
+.hide{
+	display: none;
+}
+#sample .sam-list>li img{
+	width: 260px;
+}
+#sample .sam-list>li:hover{
+	box-shadow: 0 0 15px #333;
 }
 #sample li h3{
 	color: #666;
 	font-family: sans-serif;
 	margin-top: 20px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #ccc;
 }
 #sample li p{
 	color:#666; 
+
 	font-size: 0.9em;
 }
 #sample .sam-list>li a{
 	display: block;
-	position: relative;
+	/*position: relative;*/
 }
-#sample .sam-list>li a .shaw-box{
+/*#sample .sam-list>li a .shaw-box{
 	width: 100%;
 	height:200px;
 	background-color: rgba(229,209,80,.8);
@@ -276,15 +289,15 @@ html,body,#header,#header .carousel,#header .img-ct{
 	color: white;
 	font-size: 3em;
 	display: none;
-}
-#sample .sam-list>li a:hover .shaw-box{
+}*/
+/*#sample .sam-list>li a:hover .shaw-box{
 	display: block;
-}
+}*/
 #sample .btn-box{
 	text-align: center;
 }
 .btn3{
-	background-color:#50ACFF;
+	background-color:#6764bf;
 	color: white;
 	padding: 14px 24px;
 	font-size: 1em;
@@ -295,7 +308,7 @@ html,body,#header,#header .carousel,#header .img-ct{
 	margin-top: 40px;
 }
 .btn3:hover{
-	background-color: #0f8dfe;
+	background-color: #7471d5;
 }
 #about-us .time-line{
 	margin-top: 80px;
