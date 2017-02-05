@@ -18,18 +18,18 @@
       imgPre = document.querySelector('.img-preview'),
       li = document.querySelectorAll('li'),
       img = document.createElement('img');
-  for(var i=0; i<li.length; i++){
-    li[i].addEventListener('mouseenter',function(){
-      var src = this.getAttribute('data-img');
-      img.setAttribute('src',src);
-      imgPre.appendChild(img);
-    },false);
-  }
-  // ct.addEventListener('click',function(e){
-  //   e.stopPropagation();
-  //   var path = e.target.getAttribute('data-img');
-  //   imgPre.innerHTML='<img src= "'+path+'">'
-  // },false)
+  // for(var i=0; i<li.length; i++){
+  //   li[i].addEventListener('mouseenter',function(){
+  //     var src = this.getAttribute('data-img');
+  //     img.setAttribute('src',src);
+  //     imgPre.appendChild(img);
+  //   },false);
+  // }
+  ct.addEventListener('click',function(e){
+    // e.stopPropagation();
+    var path = e.target.getAttribute('data-img');
+    imgPre.innerHTML='<img src= "'+path+'">'
+  },false)
 
 </script>
 </body>
