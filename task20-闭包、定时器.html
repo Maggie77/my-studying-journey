@@ -176,19 +176,23 @@
 			//闭包实现：delayer: 0, delayer:1…
 			//方法一：
 			for(var i=0;i<5;i++){
-			    (function(){
+			  (function(){
 			    var n=i;
 			    setTimeout(function(){
-			    console.log('delayer:' + n );
-			    }, 0)})()
+				    console.log('delayer:' + n );
+				  }, 0)
+			  })();
+
 			    console.log(i);
 			}
 			//方法二：
 			for(var i=0;i<5;i++){
-			    (function(n){
+			  (function(n){
 			    setTimeout(function(){
-			    console.log('delayer:' + n );
-			    }, 0)})(i)
+			    	console.log('delayer:' + n );
+			    }, 0)
+			  })(i);
+
 			    console.log(i);
 			}
 			//以上两种方法输出：
@@ -204,11 +208,12 @@
 			delayer:4
 			//方法三：
 			for(var i=0;i<5;i++){
-			    setTimeout(function(n){
+			  setTimeout(function(n){
 			    console.log('delayer:' + n );
-			    }(i), 0)
-			     console.log(i);
-			  }  
+			  }(i), 0)
+			  
+			  console.log(i);
+			}  
 			//输出：
 			delayer:0
 			0

@@ -151,7 +151,7 @@
 				var defereds = []; //创建存储 defered 对象的数组
 				$nodes.find('img').each(function(){
 					var defer = $.Deferred();
-					$(this).load(function(){
+					$(this).on('load',function(){
 						defer.resolve();
 					}); //当每个图片加载完成后，执行 resolve
 					defereds.push(defer);

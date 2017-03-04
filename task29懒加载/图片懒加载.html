@@ -54,7 +54,7 @@
 					winH = $(window).height(),
 					top = $el.offset().top;
 
-			if (top<scrollH+winH) {
+			if (top>scrollH && top<scrollH+winH) {
 				return true;
 			}else{
 				return false;

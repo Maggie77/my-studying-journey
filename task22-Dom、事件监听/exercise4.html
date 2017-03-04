@@ -83,8 +83,7 @@
         }
     }
     function singleRemoveClass(el, cls){
-        var reg = new RegExp( '(\\s|^)' + cls + '(\\s|$)'   );
-        if(reg.test(el.className)){
+        if(hasClass(el,cls)){
             var tmp = el.className.replace(cls,'').replace(/\s{2,}/g,' ');
             el.className=tmp;
         }
@@ -108,25 +107,25 @@
     var ct = document.querySelector('.ct'),
         li = document.querySelectorAll('li'),
         panel = document.querySelectorAll('.panel');
-//    方法一：循环遍历
-//    for(var i=0;i<li.length;i++){
-//        li[i].addEventListener('click',function(){
-//            removeClass(this.parentElement.children,'active');
-//            addClass(this,'active');
-//            removeClass(panel,'active');
-//            addClass(panel[indexOf(this)],'active');
-//        },false)
-//    }
-//      方法二：事件代理
-      ct.addEventListener('click',function(e){
-          var target = e.target;
-          if(indexOf(target)>-1){
-              removeClass(target.parentElement.children,'active');
-              addClass(target,'active');
-              removeClass(panel,'active');
-              addClass(panel[indexOf(target)],'active');
-          }
-      },false)
+   // 方法一：循环遍历
+   for(var i=0;i<li.length;i++){
+       li[i].addEventListener('click',function(){
+           removeClass(this.parentElement.children,'active');
+           addClass(this,'active');
+           removeClass(panel,'active');
+           addClass(panel[indexOf(this)],'active');
+       },false)
+   }
+  // 方法二：事件代理
+  // ct.addEventListener('click',function(e){
+  //     var target = e.target;
+  //     if(indexOf(target)>-1){
+  //         removeClass(target.parentElement.children,'active');
+  //         addClass(target,'active');
+  //         removeClass(panel,'active');
+  //         addClass(panel[indexOf(target)],'active');
+  //     }
+  // },false)
 
 </script>
 </body>
